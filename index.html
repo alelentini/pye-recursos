@@ -22,25 +22,55 @@
 			<div id='title-div' class='sticky-top'>
 				<!-- Title -->
 				<div class='row bg-secondary text-white pt-1 pb-1'>
-					<div class='col-8'>
-						<h5 style='margin-left:15px' id='page-title'><i class='fa fa-book' style='margin-right: 10px'></i>Recursos Probabilidad y Estadística</h5>
+					<h5 style='margin-left:15px' id='page-title'><i class='fa fa-book' style='margin-right: 10px'></i>Recursos Probabilidad y Estadística</h5>
+				</div>
+				<!-- Filters -->
+				<div class='row' style='background-color: lightgrey;'>
+					<div class='btn-group' role='group'>
+						<!-- Filter text -->
+						<div class='btn-group'><span id='filter-text' class='my-auto' style='font-size:90%'></span></div>
+						<!-- Category -->
+						<div class='btn-group' role='group'>
+							<button type='button btn-sm' class='btn dropdown-toggle' data-bs-toggle='dropdown' style='font-size:90%'>
+								Categoría
+							</button>
+							<ul id='btn-category' class='dropdown-menu'></ul>
+						</div>
+						<!-- Status -->
+						<div class='btn-group' role='group'>
+							<button type='button btn-sm' class='btn dropdown-toggle' data-bs-toggle='dropdown' style='font-size:90%'>
+								Status
+							</button>
+							<ul id='btn-status' class='dropdown-menu'></ul>
+						</div>
+						<!-- Type -->
+						<div class='btn-group' role='group'>
+							<button type='button btn-sm' class='btn dropdown-toggle' data-bs-toggle='dropdown' style='font-size:90%'>
+								Status
+							</button>
+							<ul id='btn-status' class='dropdown-menu'></ul>
+						</div>
+						<!-- Units -->
+						<div class='btn-group' role='group'>
+							<button type='button btn-sm' class='btn dropdown-toggle' data-bs-toggle='dropdown' style='font-size:90%'>
+								Units
+							</button>
+							<ul id='btn-units' class='dropdown-menu'></ul>
+						</div>
+						<!-- Division -->
+						<div class='btn-group' role='group'>
+							<button type='button btn-sm' class='btn dropdown-toggle' data-bs-toggle='dropdown' style='font-size:90%'>
+								Division
+							</button>
+							<ul id='btn-division' class='dropdown-menu'></ul>
+						</div>
 					</div>
 				</div>
 			</div>
 			<!-- Page contents-->
 			<div id='tab-contents'>
 				<div class='row mt-2'>
-					<!-- Navigation pane -->
-					<div id='nav-pane' class='col-3'>
-						<!-- Filter text -->
-						<p id='filter-text'></p>
-						<!-- TOC -->
-						<table id='nav-pane-toc-table' class='table table-hover table-borderless'>
-							<tbody id='nav-pane-toc-table-body'></tbody>
-						</table>
-					</div>
-					<!-- Contents pane -->
-					<div id='contents' class='col-9'>
+					<div id='contents'>
 						<!-- Resources table -->
 						<table id='resources-table' class='table table-hover table-borderless'>
 							<tbody id='resources-table-body'></tbody>

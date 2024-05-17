@@ -70,7 +70,7 @@ function processData() {
 function updateUi() {
   
   // Update navigation pane
-  updateNavigation();
+  //updateNavigation();
 
   // Updates contents pane
   updateContents();
@@ -119,7 +119,7 @@ function updateContents() {
   resourceTableDOM.tBodies[0].innerHTML = createHtmlCardView();
 
   // Updates filter text
-  document.getElementById('filter-text').innerHTML = `Mostrando ${resources.length} de ${resources.length} recursos`;
+  document.getElementById('filter-text').innerHTML = `<span>Mostrando ${resources.length} de ${resources.length} recursos &nbsp;&nbsp; | &nbsp;&nbsp;</span>`;
 };
 
 
