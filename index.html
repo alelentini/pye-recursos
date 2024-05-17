@@ -1,0 +1,62 @@
+<!-- <!DOCTYPE html> -->
+
+<html lang='en'>
+
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<title id='head-title'>Recursos PyE</title>
+		<!-- Bootstrap CSS -->
+		<link rel='stylesheet' type='text/css' href='libraries/bootstrap-5.2.3/css/bootstrap.min.css'>
+		<!-- Font Awesome 4 -->
+		<link rel='stylesheet' type='text/css' href='libraries/font-awesome-4.7.0/css/font-awesome.min.css'>
+		<!-- Custom CSS -->
+		<link rel='stylesheet' type='text/css' href='css/styles.css'>	
+	</head>
+
+	<body onload='main()'>
+		<!-- Page content -->
+		<div class='container-fluid'>
+			<!-- Title, filter bar and tabs buttons -->
+			<div id='title-div' class='sticky-top'>
+				<!-- Title -->
+				<div class='row bg-secondary text-white pt-1 pb-1'>
+					<div class='col-8'>
+						<h5 style='margin-left:15px' id='page-title'><i class='fa fa-book' style='margin-right: 10px'></i>Recursos Probabilidad y Estadística</h5>
+					</div>
+				</div>
+			</div>
+			<!-- Page contents-->
+			<div id='tab-contents'>
+				<div class='row mt-2'>
+					<!-- Navigation pane -->
+					<div id='nav-pane' class='col-3'>
+						<!-- Filter text -->
+						<p id='filter-text'></p>
+						<!-- TOC -->
+						<table id='nav-pane-toc-table' class='table table-hover table-borderless'>
+							<tbody id='nav-pane-toc-table-body'></tbody>
+						</table>
+					</div>
+					<!-- Contents pane -->
+					<div id='contents' class='col-9'>
+						<!-- Resources table -->
+						<table id='resources-table' class='table table-hover table-borderless'>
+							<tbody id='resources-table-body'></tbody>
+						</table>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<!------------------------------------>
+		<!-- JavaScript external references -->
+		<!------------------------------------>
+		<!-- Bootstrap -->
+		<script src='libraries/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script>
+		<!-- Data objects -->
+		<script src='data/data.js'></script>
+		<!-- Logic -->
+		<script src='js/logic.js'></script>	
+	</body>
+</html>

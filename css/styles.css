@@ -1,0 +1,106 @@
+.red {
+    color:red;
+}
+
+.green {
+    color:green;
+}
+
+.gold {
+    color:goldenrod;
+}
+
+.text-80 {
+    font-size: 80%;
+}
+
+.text-90 {
+    font-size: 90%;
+}
+
+.text-120 {
+    font-size: 120%;
+}
+
+.caption {
+    font-style: italic;
+    color:grey;
+}
+
+.text-code {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: darkred;
+}
+
+.term {
+    color: blue;
+}
+
+.toc-selected {
+    color: #34495E;
+    background-color: whitesmoke;
+    font-weight: bold;
+}
+
+
+/* Resources */
+
+.badge-ut {
+    color: black;
+    background-color: gainsboro;
+}
+
+.badge-category {
+    color: black;
+    background-color: lavender;
+    margin-left: 15px;
+}
+
+.badge-status-doing {
+    color: blue;
+    background-color: seashell;
+    margin-left: 15px;
+}
+
+.badge-status-pending {
+    color: gray;
+    background-color: seashell;
+    margin-left: 15px;
+}
+
+.badge-type {
+    color: black;
+    background-color: oldlace;
+    margin-left: 15px;
+}
+
+.badge-division {
+    color: black;
+    background-color: #D4E6F1;
+    margin-left: 15px;
+}
+
+.badge-toc {
+    color: grey;
+    background-color: #F2F3F4;
+}
+
+.resource-name {
+    font-size: 110%;
+    font-weight: bold;
+    color: darkblue;
+    text-decoration: none;
+}
+
+.resource-name:hover {
+    text-decoration: underline;
+}
+
+.toc-row-first {
+    border-top: 1px solid silver;
+}
+
+.toc-row-last {
+    border-bottom: 1px solid silver;
+}
