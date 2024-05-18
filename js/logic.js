@@ -72,6 +72,9 @@ function updateUi() {
   // Update navigation pane
   //updateNavigation();
 
+  // Updates filters pane
+  updateFilters();
+
   // Updates contents pane
   updateContents();
 };
@@ -83,7 +86,7 @@ function updateNavigation() {
   let rowClassHtml = '';
   let tocElemCount = -1;
 
-  // Creates resources table html
+  // Creates filters table html
   toc.forEach((tocElem, tocIx) => {
     if (tocElem.attribute == 'units') {
       tocElemCount = resources.filter(resource => resource.units.includes(parseInt(tocElem.name[1]))).length;
@@ -104,8 +107,69 @@ function updateNavigation() {
     `; 
   });
 
-  // Updates resources table
+  // Updates filters table
   tocTableDOM.tBodies[0].innerHTML = html;
+};
+
+
+// Updates filters pane
+function updateFilters() {
+  
+  let html = '';
+  let valuesCount = -1;
+
+  // Creates filters html > Not Units
+  ['category', 'status', 'type', 'division'].forEach(filterName => {
+    filterValues = [];
+    resources.forEach(resource => {
+      if (!filterValues.includes(resource[filterName]) && resource[filterName] !== '') {
+        filterValues.push(resource[filterName]);
+      }
+    });
+    html = '';
+    filterValues.sort().forEach(filterValue => {
+      valuesCount = resources.filter(resource => resource[filterName] == filterValue).length;
+      html += `<li><a class="dropdown-item" href="#"><span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${filterValue}</a></li>`;
+    });
+    document.getElementById(`btn-${filterName}`).innerHTML = html;
+  });
+
+  // Creates filters html > Units
+  filterValues = [];
+  ['U0', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7', 'U8'].forEach(unitName => {
+    valuesCount = resources.filter(resource => resource.units.includes(parseInt(unitName[1]))).length;
+    if (valuesCount > 0) {
+      filterValues.push(unitName);
+    }
+  });
+  html = '';
+  filterValues.sort().forEach(unitName => {
+    valuesCount = resources.filter(resource => resource.units.includes(parseInt(unitName[1]))).length;
+    html += `<li><a class="dropdown-item" href="#"><span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${unitName}</a></li>`;
+  });
+  document.getElementById('btn-units').innerHTML = html;
+
+
+  // Creates resources table html
+  /*toc.forEach((tocElem, tocIx) => {
+    if (tocElem.attribute == 'units') {
+      tocElemCount = resources.filter(resource => resource.units.includes(parseInt(tocElem.name[1]))).length;
+    } else {
+      tocElemCount = resources.filter(resource => resource[tocElem.attribute] == tocElem.name).length;
+    }
+    rowClassHtml = `${tocElem.firstElem ? 'toc-row-first' : ''} 
+                    ${tocElem.lastElem ? 'toc-row-last' : ''} 
+                    ${tocElemCount > 0 ? '' : 'd-none'}`;
+    // Row html
+    html += `
+      <tr id="toc-elem-${tocIx}" class="${rowClassHtml}" title="Seleccionar" onclick="toggleTocElem(${tocIx})" style="cursor:pointer">
+        <td>
+          <span class="badge badge-toc rounded-pill" style="width:30px">${tocElemCount}</span>
+          ${tocElem.name}
+        </td>
+      </tr>
+    `; 
+  });*/
 };
 
 
