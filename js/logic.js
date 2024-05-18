@@ -127,9 +127,13 @@ function updateFilters() {
       }
     });
     html = '';
-    filterValues.sort().forEach(filterValue => {
+    filterValues.sort().forEach((filterValue, valueIx) => {
       valuesCount = resources.filter(resource => resource[filterName] == filterValue).length;
-      html += `<li><a class="dropdown-item" href="#"><span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${filterValue}</a></li>`;
+      html += `<li id="filter-${filterName}-${valueIx}" title="Seleccionar" onclick="toggleFilter('${filterName}', ${valueIx})" data-filter="${filterValue}">
+                 <a class="dropdown-item" href="#">
+                  <span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${filterValue}
+                 </a>
+               </li>`;
     });
     document.getElementById(`btn-${filterName}`).innerHTML = html;
   });
@@ -143,33 +147,15 @@ function updateFilters() {
     }
   });
   html = '';
-  filterValues.sort().forEach(unitName => {
+  filterValues.sort().forEach((unitName, valueIx) => {
     valuesCount = resources.filter(resource => resource.units.includes(parseInt(unitName[1]))).length;
-    html += `<li><a class="dropdown-item" href="#"><span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${unitName}</a></li>`;
+    html += `<li id="filter-units-${valueIx}"  title="Seleccionar" onclick="toggleFilter('units', ${valueIx})" data-filter="${unitName}">
+               <a class="dropdown-item" href="#">
+                <span class="badge badge-toc rounded-pill" style="width:30px;margin-right:5px">${valuesCount}</span>${unitName}
+               </a>
+             </li>`;
   });
   document.getElementById('btn-units').innerHTML = html;
-
-
-  // Creates resources table html
-  /*toc.forEach((tocElem, tocIx) => {
-    if (tocElem.attribute == 'units') {
-      tocElemCount = resources.filter(resource => resource.units.includes(parseInt(tocElem.name[1]))).length;
-    } else {
-      tocElemCount = resources.filter(resource => resource[tocElem.attribute] == tocElem.name).length;
-    }
-    rowClassHtml = `${tocElem.firstElem ? 'toc-row-first' : ''} 
-                    ${tocElem.lastElem ? 'toc-row-last' : ''} 
-                    ${tocElemCount > 0 ? '' : 'd-none'}`;
-    // Row html
-    html += `
-      <tr id="toc-elem-${tocIx}" class="${rowClassHtml}" title="Seleccionar" onclick="toggleTocElem(${tocIx})" style="cursor:pointer">
-        <td>
-          <span class="badge badge-toc rounded-pill" style="width:30px">${tocElemCount}</span>
-          ${tocElem.name}
-        </td>
-      </tr>
-    `; 
-  });*/
 };
 
 
@@ -240,54 +226,59 @@ function createHtmlCardView() {
 
   // Creates resources table html
   resources.forEach((resource, Ix) => {
-    // Status badge html
-    switch (resource.status) {
-      case 'Pendiente':
-        statusHtlm = `<span class="badge rounded-pill badge-status-pending" title="Estado">${resource.status}</span>`;
-        break;
-
-        case 'En progreso':
-          statusHtlm = `<span class="badge rounded-pill badge-status-doing" title="Estado">${resource.status}</span>`;
-          break;
-    
-      default:
-        statusHtlm = '';
-        break;
+    if (resource.active === undefined) {
+      resource.active = true;
     }
-    // Card html
-    htmlCard = `
-      <div class="card h-100">
-        <div class="card-body">
-          <p class="card-title"><a class="resource-name" href="${resource.url}" target="_blank" title="Abrir recurso">${resource.name}</a></p>
-          <p class="card-text" style="margin-top:20px;font-size:90%">
-            <span class="badge rounded-pill badge-ut" title="Unidades temáticas">U: ${resource.ut}</span>
-            <span class="badge rounded-pill badge-category" title="Categoría">${resource.category}</span>
-            ${statusHtlm}
-            <span class="badge rounded-pill badge-type" title="Tipo">${resource.type}</span>
-            <span class="badge rounded-pill badge-division" title="Tipo">${resource.division}</span>
-          </p>
-          <p class="card-text" style="margin-top:20px;font-size:90%">
-            ${resource.description == undefined ? '' : resource.description}
-          </p>
-        </div>
-      </div>
-    `;
-    // Cards html
-    if (cardsCount == 0) {
-      html += `
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <div class="col">
-            ${htmlCard}
-          </div>`;
-      cardsCount++;
-    } else {
-      html += `
-          <div class="col">
-            ${htmlCard}
+    if (resource.active) {
+      // Status badge html
+      switch (resource.status) {
+        case 'Pendiente':
+          statusHtlm = `<span class="badge rounded-pill badge-status-pending" title="Estado">${resource.status}</span>`;
+          break;
+
+          case 'En progreso':
+            statusHtlm = `<span class="badge rounded-pill badge-status-doing" title="Estado">${resource.status}</span>`;
+            break;
+      
+        default:
+          statusHtlm = '';
+          break;
+      }
+      // Card html
+      htmlCard = `
+        <div id="resource-${Ix}" class="card h-100">
+          <div class="card-body">
+            <p class="card-title"><a class="resource-name" href="${resource.url}" target="_blank" title="Abrir recurso">${resource.name}</a></p>
+            <p class="card-text" style="margin-top:20px;font-size:90%">
+              <span class="badge rounded-pill badge-ut" title="Unidades temáticas">U: ${resource.ut}</span>
+              <span class="badge rounded-pill badge-category" title="Categoría">${resource.category}</span>
+              ${statusHtlm}
+              <span class="badge rounded-pill badge-type" title="Tipo">${resource.type}</span>
+              <span class="badge rounded-pill badge-division" title="Tipo">${resource.division}</span>
+            </p>
+            <p class="card-text" style="margin-top:20px;font-size:90%">
+              ${resource.description == undefined ? '' : resource.description}
+            </p>
           </div>
         </div>
       `;
-      cardsCount = 0;
+      // Cards html
+      if (cardsCount == 0) {
+        html += `
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+              ${htmlCard}
+            </div>`;
+        cardsCount++;
+      } else {
+        html += `
+            <div class="col">
+              ${htmlCard}
+            </div>
+          </div>
+        `;
+        cardsCount = 0;
+      }
     }
   });
 
@@ -295,17 +286,21 @@ function createHtmlCardView() {
 }
 
 
-// Toggle toc element
-function toggleTocElem(tocIx) {
+// Toggle filter element
+function toggleFilter(filterName, valueIx) {
 
   // Toggles element selection class
-  document.getElementById(`toc-elem-${tocIx}`).classList.toggle('toc-selected');
+  document.getElementById(`filter-${filterName}-${valueIx}`).classList.toggle('filter-selected');
 
-  // Updates selection status
-  toc[tocIx].selected = toc[tocIx].selected ? false : true;
+  // Toggles filter selection class
+  if (document.getElementById(`btn-${filterName}`).getElementsByClassName('filter-selected').length > 0) {
+    document.getElementById(`btn-${filterName}-label`).classList.add('filter-selected');
+  } else {
+    document.getElementById(`btn-${filterName}-label`).classList.remove('filter-selected');
+  }
 
   // Applies filter
-  applyFilter(tocIx);
+  applyFilter();
 }
 
 
@@ -314,31 +309,39 @@ function applyFilter() {
 
   let active = false;
   let activeResurces = 0;
-  let tocSelected = [];
+  let filters = [];
+  let filterValues = [];
 
-  // Shows/hides resource according to filter selection
-  resources.forEach((resource, Ix) => {
-    active = true;
-    tocSelected = toc.filter(tocElem => tocElem.selected);
-    if (tocSelected.length > 0) {
-      tocSelected.forEach(tocElem => {
-        if (tocElem.attribute == 'units') {
-          active &= resource.units.includes(parseInt(tocElem.name[1]));
-        } else {
-          active &= resource[tocElem.attribute] == tocElem.name;
-        }
-      });
-    }
-    if (active) {
-      document.getElementById(`resource-${Ix}`).classList.remove('d-none');
-      activeResurces++;
-    } else {
-      document.getElementById(`resource-${Ix}`).classList.add('d-none');
+  // Finds selected filters
+  ['category', 'status', 'type', 'units', 'division'].forEach(filterName => {
+    filterValues = document.getElementById(`btn-${filterName}`).getElementsByTagName('li');
+    for (let filterValue of filterValues) {
+      if (filterValue.classList.contains('filter-selected')) {
+        filters.push({'name': filterName, 'value': filterValue.getAttribute('data-filter')});
+      }
     }
   });
 
+  // Updates resource active statis according to filters
+  resources.forEach((resource, Ix) => {
+    active = true;
+    if (filters.length > 0) {
+      filters.forEach(filter => {
+        if (filter.name == 'units') {
+          active &= resource.units.includes(parseInt(filter.value[1]));
+        } else {
+          active &= resource[filter.name] == filter.value;
+        }
+      });
+    }
+    resource.active = active;
+  });
+
+  // Updates resources > card view
+  resourceTableDOM.tBodies[0].innerHTML = createHtmlCardView();
+
   // Updates filter text
-  document.getElementById('filter-text').innerHTML = `Mostrando ${activeResurces} de ${resources.length} recursos`;
+  document.getElementById('filter-text').innerHTML = `Mostrando ${resources.filter(resource => resource.active).length} de ${resources.length} recursos &nbsp;&nbsp; | &nbsp;&nbsp;`;
 };
 
 

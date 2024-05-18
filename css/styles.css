@@ -37,9 +37,9 @@
     color: blue;
 }
 
-.toc-selected {
+.filter-selected {
     color: #34495E;
-    background-color: whitesmoke;
+    background-color: silver;
     font-weight: bold;
 }
 
